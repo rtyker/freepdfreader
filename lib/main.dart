@@ -17,31 +17,45 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   late StreamSubscription _intentSub;
   String? _pdfPath;
+  String? _errorMessage;
   PdfController? _pdfController;
+
+  void _loadPdf(String path) {
+    try {
+      final controller = PdfController(
+        document: PdfDocument.openFile(path),
+      );
+      setState(() {
+        _pdfPath = path;
+        _errorMessage = null;
+        _pdfController?.dispose();
+        _pdfController = controller;
+      });
+    } catch (e) {
+      setState(() {
+        _pdfPath = null;
+        _errorMessage = 'Falha ao carregar o PDF: $e';
+        _pdfController?.dispose();
+        _pdfController = null;
+      });
+    }
+  }
 
   @override
   void initState() {
     super.initState();
     _intentSub = ReceiveSharingIntent.instance.getMediaStream().listen((files) {
       if (files.isNotEmpty) {
-        setState(() {
-          _pdfPath = files.first.path;
-          _pdfController?.dispose();
-          _pdfController = PdfController(
-            document: PdfDocument.openFile(_pdfPath!),
-          );
-        });
+        _loadPdf(files.first.path);
       }
-    }, onError: (err) {});
+    }, onError: (err) {
+      setState(() {
+        _errorMessage = 'Erro ao receber compartilhamento: $err';
+      });
+    });
     ReceiveSharingIntent.instance.getInitialMedia().then((files) {
       if (files.isNotEmpty) {
-        setState(() {
-          _pdfPath = files.first.path;
-          _pdfController?.dispose();
-          _pdfController = PdfController(
-            document: PdfDocument.openFile(_pdfPath!),
-          );
-        });
+        _loadPdf(files.first.path);
       }
       ReceiveSharingIntent.instance.reset();
     });
@@ -167,14 +181,29 @@ class _MyAppState extends State<MyApp> {
               ],
             ),
         ),
-        body: _pdfPath == null
+        body: _errorMessage != null
             ? Center(
-                child: Text(
-                  'Nenhum PDF recebido',
-                  style: Theme.of(context).textTheme.bodyMedium,
+                child: Padding(
+                  padding: const EdgeInsets.all(24.0),
+                  child: Text(
+                    _errorMessage!,
+                    style: const TextStyle(
+                      color: Colors.redAccent,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
                 ),
               )
-            : Column(
+            : _pdfPath == null
+                ? Center(
+                    child: Text(
+                      'Nenhum PDF recebido',
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
+                  )
+                : Column(
                 children: [
                   Container(
                     width: double.infinity,
