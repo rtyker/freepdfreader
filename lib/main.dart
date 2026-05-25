@@ -142,7 +142,23 @@ class _MyAppState extends State<MyApp> {
                       children: [
                         const Text(
                           'Um visualizador de PDF simples, leve e moderno desenvolvido em Flutter.\n\n'
-                          'Permite abrir PDFs locais, receber compartilhamentos de outros aplicativos e compartilhar arquivos facilmente.',
+                          'Este aplicativo é GRATUITO para uso pessoal e educacional.',
+                        ),
+                        const SizedBox(height: 16),
+                        const Text(
+                          'Contato para suporte ou licenciamento comercial:',
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 4),
+                        const SelectableText(
+                          'rtyker@gmail.com',
+                          style: TextStyle(
+                            color: Colors.blue,
+                            fontSize: 14,
+                          ),
                         ),
                       ],
                     );
