@@ -145,37 +145,86 @@ class _MyAppState extends State<MyApp> {
                   ),
                   onTap: () {
                     Navigator.pop(context);
-                    showAboutDialog(
+                    showDialog(
                       context: context,
-                      applicationName: 'freepdfreader',
-                      applicationVersion: '1.0.0',
-                      applicationIcon: const Icon(
-                        Icons.picture_as_pdf,
-                        color: Colors.amberAccent,
-                        size: 40,
-                      ),
-                      children: [
-                        const Text(
-                          'Um visualizador de PDF simples, leve e moderno desenvolvido em Flutter.\n\n'
-                          'Este aplicativo é GRATUITO para uso pessoal e educacional.',
-                        ),
-                        const SizedBox(height: 16),
-                        const Text(
-                          'Contato para suporte ou licenciamento comercial:',
-                          style: TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.bold,
+                      builder: (context) {
+                        return AlertDialog(
+                          backgroundColor: const Color(0xFF2A2A40),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16),
                           ),
-                        ),
-                        const SizedBox(height: 4),
-                        const SelectableText(
-                          'rtyker@gmail.com',
-                          style: TextStyle(
-                            color: Colors.blue,
-                            fontSize: 14,
+                          title: Row(
+                            children: const [
+                              Icon(
+                                Icons.picture_as_pdf,
+                                color: Colors.amberAccent,
+                                size: 32,
+                              ),
+                              SizedBox(width: 12),
+                              Text(
+                                'freepdfreader',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20,
+                                ),
+                              ),
+                            ],
                           ),
-                        ),
-                      ],
+                          content: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text(
+                                'Um visualizador de PDF simples, leve e moderno desenvolvido em Flutter.\n\n'
+                                'Este aplicativo é GRATUITO para uso pessoal e educacional.',
+                                style: TextStyle(color: Colors.white70, fontSize: 14),
+                              ),
+                              const SizedBox(height: 20),
+                              const Text(
+                                'Contato para suporte ou licenciamento comercial:',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              const SizedBox(height: 6),
+                              const SelectableText(
+                                'rtyker@gmail.com',
+                                style: TextStyle(
+                                  color: Colors.blueAccent,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                              const SizedBox(height: 8),
+                              Align(
+                                alignment: Alignment.centerRight,
+                                child: Text(
+                                  'v1.0.0',
+                                  style: TextStyle(
+                                    color: Colors.white.withValues(alpha: 0.4),
+                                    fontSize: 12,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          actions: [
+                            TextButton(
+                              onPressed: () => Navigator.pop(context),
+                              child: const Text(
+                                'FECHAR',
+                                style: TextStyle(
+                                  color: Colors.amberAccent,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ],
+                        );
+                      },
                     );
                   },
                 ),
