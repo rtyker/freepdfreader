@@ -30,5 +30,13 @@ void main() {
 
     // Verify that the drawer is now open and the "SOBRE" item is visible.
     expect(find.text('SOBRE'), findsOneWidget);
+
+    // Tap the "SOBRE" item.
+    await tester.tap(find.text('SOBRE'));
+    await tester.pumpAndSettle();
+
+    // Verify that the About Dialog is open and shows contact details.
+    expect(find.text('Contato para suporte ou licenciamento comercial:'), findsOneWidget);
+    expect(find.text('rtyker@gmail.com'), findsOneWidget);
   });
 }

@@ -85,8 +85,9 @@ class _MyAppState extends State<MyApp> {
         ),
         iconTheme: const IconThemeData(color: Colors.white70),
       ),
-      home: Scaffold(
-        appBar: AppBar(
+      home: Builder(
+        builder: (context) => Scaffold(
+          appBar: AppBar(
           title: const Text('Visualizador PDF'),
           actions: [
             if (_pdfPath != null)
@@ -233,6 +234,7 @@ class _MyAppState extends State<MyApp> {
                   ),
                 ],
               ),
+        ),
       ),
     );
   }
