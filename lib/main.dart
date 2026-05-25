@@ -77,7 +77,7 @@ class _MyAppState extends State<MyApp> {
           actions: [
             if (_pdfPath != null)
               IconButton(
-                icon: Icon(Icons.share),
+                icon: const Icon(Icons.share),
                 tooltip: 'Compartilhar',
                 onPressed: () async {
                   await SharePlus.instance.share(
@@ -89,6 +89,67 @@ class _MyAppState extends State<MyApp> {
                 },
               ),
           ],
+        ),
+        drawer: Drawer(
+          backgroundColor: const Color(0xFF22223B),
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: [
+                DrawerHeader(
+                  decoration: const BoxDecoration(
+                    color: Color(0xFF2A2A40),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      const Text(
+                        'freepdfreader',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        'v1.0.0',
+                        style: TextStyle(
+                          color: Colors.white.withValues(alpha: 0.5),
+                          fontSize: 14,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                ListTile(
+                  leading: const Icon(Icons.info_outline, color: Colors.white70),
+                  title: const Text(
+                    'SOBRE',
+                    style: TextStyle(color: Colors.white70),
+                  ),
+                  onTap: () {
+                    Navigator.pop(context);
+                    showAboutDialog(
+                      context: context,
+                      applicationName: 'freepdfreader',
+                      applicationVersion: '1.0.0',
+                      applicationIcon: const Icon(
+                        Icons.picture_as_pdf,
+                        color: Colors.amberAccent,
+                        size: 40,
+                      ),
+                      children: [
+                        const Text(
+                          'Um visualizador de PDF simples, leve e moderno desenvolvido em Flutter.\n\n'
+                          'Permite abrir PDFs locais, receber compartilhamentos de outros aplicativos e compartilhar arquivos facilmente.',
+                        ),
+                      ],
+                    );
+                  },
+                ),
+              ],
+            ),
         ),
         body: _pdfPath == null
             ? Center(
